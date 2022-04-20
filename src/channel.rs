@@ -1,4 +1,8 @@
 //! Thread safe communication channel implementing `Evented`
+
+#[cfg(all(not(feature = "std"), feature = "sgx"))]
+use crate::sgx_reexport_prelude::*;
+
 use lazycell::{AtomicLazyCell, LazyCell};
 use mio::{Evented, Poll, PollOpt, Ready, Registration, SetReadiness, Token};
 use std::any::Any;

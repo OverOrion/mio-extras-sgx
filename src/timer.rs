@@ -1,4 +1,8 @@
 //! Timer optimized for I/O related operations
+
+#[cfg(all(not(feature = "std"), feature = "sgx"))]
+use crate::sgx_reexport_prelude::*;
+
 use crate::convert;
 use lazycell::LazyCell;
 use mio::{Evented, Poll, PollOpt, Ready, Registration, SetReadiness, Token};
