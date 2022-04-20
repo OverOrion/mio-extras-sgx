@@ -30,6 +30,7 @@ sgx = [
     "mio_sgx",
 ]
 std = [
+    "mio",
     "log/std",
     "slab/std",
 ]
