@@ -4,7 +4,7 @@
 use crate::sgx_reexport_prelude::*;
 
 use lazycell::{AtomicLazyCell, LazyCell};
-use mio::{Evented, Poll, PollOpt, Ready, Registration, SetReadiness, Token};
+use mio::{event::Evented, Poll, PollOpt, Ready, Registration, SetReadiness, Token};
 use std::any::Any;
 use std::error;
 use std::sync::atomic::{AtomicUsize, Ordering};

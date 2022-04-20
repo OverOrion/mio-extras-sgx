@@ -5,12 +5,14 @@ use crate::sgx_reexport_prelude::*;
 
 use crate::convert;
 use lazycell::LazyCell;
-use mio::{Evented, Poll, PollOpt, Ready, Registration, SetReadiness, Token};
+use mio::{event::Evented, Poll, PollOpt, Ready, Registration, SetReadiness, Token};
 use slab::Slab;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 use std::{cmp, fmt, io, iter, thread, u64, usize};
+use std::format;
+use std::vec::Vec;
 
 /// A timer.
 ///
