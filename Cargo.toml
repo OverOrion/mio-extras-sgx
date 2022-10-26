@@ -1,25 +1,30 @@
 [package]
-name          = "mio-extras"
-version       = "2.0.6"
-license       = "MIT OR Apache-2.0"
-authors       = ["Carl Lerche <me@carllerche.com>", "David Hotham"]
-description   = "Extra components for use with Mio"
+name = "mio-extras"
+version = "2.0.6"
+license = "MIT OR Apache-2.0"
+authors = ["Carl Lerche <me@carllerche.com>", "David Hotham"]
+description = "Extra components for use with Mio"
 documentation = "https://docs.rs/mio-extras"
-repository    = "https://github.com/dimbleby/mio-extras"
-readme        = "README.md"
-keywords      = ["io", "async", "non-blocking"]
-categories    = ["asynchronous"]
-exclude       = [".gitignore"]
-edition       = "2018"
+repository = "https://github.com/dimbleby/mio-extras"
+readme = "README.md"
+keywords = ["io", "async", "non-blocking"]
+categories = ["asynchronous"]
+exclude = [".gitignore"]
+edition = "2018"
 
 [dependencies]
 # std-only libraries
 mio = { version = "0.6.14", optional = true, default-features = false }
 
 # SGX-enabled libraries
-mio_sgx = { package = "mio", git = "https://github.com/mesalock-linux/mio-sgx", tag = "sgx_1.1.3", optional = true }
+#mio_sgx = { package = "mio", git = "https://github.com/mesalock-linux/mio-sgx", tag = "sgx_1.1.3", optional = true }
+mio_sgx = { package = "mio", optional = true, git = "https://github.com/OverOrion/mio-sgx", branch = "teaclave-v1.1.6-testing" }
 sgx_types = { branch = "master", git = "https://github.com/apache/teaclave-sgx-sdk.git", optional = true }
-sgx_tstd = { branch = "master", git = "https://github.com/apache/teaclave-sgx-sdk.git", optional = true, features = ["net", "thread"] }
+sgx_tstd = { branch = "master", git = "https://github.com/apache/teaclave-sgx-sdk.git", optional = true, features = [
+    "net",
+    "thread",
+] }
+
 
 # no-std compatible libraries
 lazycell = { version = "1", default-features = false }
@@ -28,17 +33,13 @@ slab = { version = "0.4", default-features = false }
 
 [features]
 default = ["std"]
-sgx = [
-    "mio_sgx",
-    "sgx_tstd",
-    "sgx_types",
-]
-std = [
-    "mio",
-    "log/std",
-    "slab/std",
-]
+sgx = ["mio_sgx", "sgx_tstd", "sgx_types"]
+std = ["mio", "log/std", "slab/std"]
 
 [[test]]
 name = "test"
 path = "test/mod.rs"
+
+[patch.'https://github.com/apache/teaclave-sgx-sdk/']
+sgx_tstd = { git = "https://github.com/apache/teaclave-sgx-sdk?rev=v1.1.6-testing" }
+sgx_types = { git = "https://github.com/apache/teaclave-sgx-sdk?rev=v1.1.6-testing", optional = true }
